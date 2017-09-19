@@ -1,3 +1,4 @@
+import { MakesService } from './Services/makes.service';
 import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -33,7 +34,9 @@ import { CounterComponent } from './components/counter/counter.component';
             { path: '**', redirectTo: 'home' }
         ])
     ],
-    providers: [],
+    providers: [
+        MakesService
+    ],
 })
 export class AppModuleShared {
 }

@@ -1,3 +1,4 @@
+import { MakesService } from '../../Services/makes.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VehicleFormComponent implements OnInit {
 
-  constructor() { }
+  makes:any[];
+  constructor(private makesService:MakesService) { }
 
   ngOnInit() {
+    this.makesService.getMakes().subscribe(makes=>this.makes=makes);
+    console.log(this.makes);
+    
   }
 
 }
