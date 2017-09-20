@@ -46,13 +46,33 @@ namespace Vega.Controllers
             var vehicle = await context.Vehicles
             .Include(v => v.Features)
             .SingleOrDefaultAsync(v => v.Id==id);
-            
+
+            if (vehicle==null)
+                return NotFound();
+
             mapper.Map<VehicleResource, Vehicle>(vehicleResource, vehicle);
             vehicle.LastUpdate=DateTime.Now;
             await context.SaveChangesAsync();
 
             var result = mapper.Map<Vehicle, VehicleResource>(vehicle);
             return Ok(result);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteVehicle(int id)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var vehicle = await context.Vehicles.SingleOrDefaultAsync(v => v.Id==id);
+
+            if (vehicle==null)
+                return NotFound();
+                
+            context.Vehicles.Remove(vehicle);
+            await context.SaveChangesAsync();
+
+            return Ok(id);
         }
     }
 }
