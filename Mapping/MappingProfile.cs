@@ -28,29 +28,29 @@ namespace Vega.Mapping
             .ForMember(vr=>vr.ContactEmail, opt => opt.MapFrom(vr => vr.Contact.Email))
             .ForMember(vr=>vr.ContactPhone, opt => opt.MapFrom(vr => vr.Contact.Phone))
             .ForMember(vr=>vr.Features, opt => opt.Ignore())
-             .AfterMap((vr ,v ) =>{
-                //removing feature
-                var removedFeatures = new List<VehicleFeature>();
-                foreach (var f in v.Features)
-                {
-                    if (!vr.Features.Contains(f.FeatureId))
-                    {
-                        removedFeatures.Add(f);
-                    }
-                }
+             .AfterMap((vr, v) =>
+             {
+                 //removing feature
+                 var removedFeatures = v.Features
+                 .Where(f => !vr.Features
+                 .Contains(f.FeatureId));
 
-                foreach (var f in removedFeatures)
-                {
-                    v.Features.Remove(f);
-                }
+                 foreach (var f in removedFeatures)
+                 {
+                     v.Features.Remove(f);
+                 }
 
-                //Add new fetures
-                foreach (var id in vr.Features)
-                {
-                    if (!v.Features.Any(f => f.FeatureId==id));
-                        v.Features.Add(new VehicleFeature{FeatureId=id});
-                }
-            });
+                 //Add new fetures
+                 var addedFeatures = vr.Features
+                 .Where(id => !v.Features
+                 .Any(f => f.FeatureId == id))
+                 .Select(id => new VehicleFeature{FeatureId = id} );
+
+                 foreach (var f in addedFeatures)
+                 {
+                     v.Features.Add(f);
+                 }
+             });
         }
     }
 }
