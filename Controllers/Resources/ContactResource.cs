@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Vega.Controllers.Resources
 {
     public class ContactResource
