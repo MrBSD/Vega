@@ -38,11 +38,13 @@ export class VehicleFormComponent implements OnInit {
   else{
     var index = this.vehicle.features.indexOf(featureId);
     this.vehicle.features.splice(index, 1);
-  }
-
+    }
    
   }
 
-  
+  submit(){
+    this.vehicleService.create(this.vehicle)
+    .subscribe(x => console.log(x));
+  }
 
 }
