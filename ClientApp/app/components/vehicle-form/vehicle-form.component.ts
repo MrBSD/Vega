@@ -10,8 +10,11 @@ export class VehicleFormComponent implements OnInit {
 
   makes:any[];
   models: any[];
-  vehicle:any={};
-  features:any[];
+  features: any [];
+  vehicle:any={
+    
+    contact:{}
+  };
 
   constructor(
     private vehicleService:VehicleService) { }
