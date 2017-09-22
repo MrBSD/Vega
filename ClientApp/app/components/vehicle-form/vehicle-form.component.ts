@@ -1,3 +1,4 @@
+import { Event } from '@angular/router/src/events';
 import { VehicleService } from '../../Services/vehicle.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -12,7 +13,7 @@ export class VehicleFormComponent implements OnInit {
   models: any[];
   features: any [];
   vehicle:any={
-    
+    features:[],
     contact:{}
   };
 
@@ -30,5 +31,18 @@ export class VehicleFormComponent implements OnInit {
     this.models = selectedMake ? selectedMake.models:[];
     delete this.vehicle.modelId;
   }
+
+  onFeatureToggle(featureId, $event) {
+   if($event.target.checked)
+    this.vehicle.features.push(featureId);
+  else{
+    var index = this.vehicle.features.indexOf(featureId);
+    this.vehicle.features.splice(index, 1);
+  }
+
+   
+  }
+
+  
 
 }
