@@ -55,7 +55,7 @@ namespace Vega.Controllers
         }
 
 
-        [HttpPost("{id}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateVehicle(int id, [FromBody]SaveVehicleResource vehicleResource)
         {
             if (!ModelState.IsValid)
@@ -72,7 +72,7 @@ namespace Vega.Controllers
 
             await unitOfWork.CompleteAsync();
 
-
+            vehicle = await repository.GetVehicle(vehicle.Id);
             var result = mapper.Map<Vehicle, VehicleResource>(vehicle);
             return Ok(result);
         }
