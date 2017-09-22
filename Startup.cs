@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using AutoMapper;
 using Vega.Persistence;
+using Vega.Core;
 
 namespace Vega
 {
