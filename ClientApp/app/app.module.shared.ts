@@ -1,7 +1,8 @@
+import * as Raven from 'raven-js';
 import { AppErrorHandler } from './app.error-handler';
 import { VehicleService } from './Services/vehicle.service';
 import { VehicleFormComponent } from './components/vehicle-form/vehicle-form.component';
-import { ErrorHandler, NgModule } from '@angular/core';
+import { ErrorHandler, NgModule, NgZone} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -13,6 +14,10 @@ import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { HomeComponent } from './components/home/home.component';
 import { FetchDataComponent } from './components/fetchdata/fetchdata.component';
 import { CounterComponent } from './components/counter/counter.component';
+
+Raven
+.config('https://a422ee744fc2482fbdbc5487b7b6ece9@sentry.io/221123')
+.install();
 
 @NgModule({
     declarations: [
