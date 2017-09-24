@@ -1,6 +1,6 @@
 import { Vehicle } from './../../Models/Vehicle';
 import { SaveVehicle } from '../../Models/SaveVehicle';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Event } from '@angular/router/src/events';
 import { VehicleService } from '../../Services/vehicle.service';
@@ -99,8 +99,22 @@ export class VehicleFormComponent implements OnInit {
   }
 
   submit(){
-    this.vehicleService.create(this.vehicle)
-    .subscribe(x => console.log(x))
+    if (this.vehicle.id){
+      this.vehicleService.update(this.vehicle)
+      .subscribe(x => {
+        this.toastyService.success({
+          title: 'Seccess',
+          msg: 'The vehicle was successfully updated',
+          theme: 'bootstrap',
+          showClose: true,
+          timeout: 5000
+        });
+      });
+    }
+    else {
+          this.vehicleService.create(this.vehicle)
+          .subscribe(x => console.log(x))
+    }
     
   }
 
