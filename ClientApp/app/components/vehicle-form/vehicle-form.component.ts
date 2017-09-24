@@ -18,16 +18,16 @@ export class VehicleFormComponent implements OnInit {
   makes:any[];
   models: any[];
   features: any [];
-  vehicle:SaveVehicle={
-    id:0,
-    makeId:0,
-    modelId:0,
+  vehicle: any = {
+    id: 0,
+    makeId: 0,
+    modelId: 0,
     isRegistered: false,
-    features:[],
-    contact:{
+    features: [],
+    contact: {
       name: '',
       phone: '',
-      email: '',
+      email: ''
     }
   };
 
@@ -38,7 +38,8 @@ export class VehicleFormComponent implements OnInit {
   private toastyService: ToastyService) { 
 
     route.params.subscribe(p => {
-      this.vehicle.id = +p['id']
+      if (p['id'])
+        this.vehicle.id = +p['id']
     });
   }
 
@@ -57,14 +58,14 @@ export class VehicleFormComponent implements OnInit {
         this.makes = data[0];
         this.features = data[1];
 
-        if (this.vehicle.id)
+        if (this.vehicle.id){
           this.setVehicle(data[2]);
           this.populateModels();
-    });
-      // , err => {
-      //   if (err.status == 404)
-      //     this.router.navigate(['/home']);
-      // }
+       }
+      }, err => {
+        if (err.status == 404)
+          this.router.navigate(['/home']);
+      });
   }
 
   private setVehicle(v: Vehicle){
@@ -112,10 +113,26 @@ export class VehicleFormComponent implements OnInit {
       });
     }
     else {
-          this.vehicleService.create(this.vehicle)
-          .subscribe(x => console.log(x))
+      this.vehicleService.create(this.vehicle)
+          .subscribe(x => console.log(x));
     }
+    
     
   }
 
+  deleteVehicle(){
+    if (confirm('Are you sure?')){
+      this.vehicleService.delete(this.vehicle.id)
+      .subscribe(x =>{
+        this.router.navigate(['/home']);
+        this.toastyService.success({
+          title: 'Seccess',
+          msg: 'The vehicle was successfully deleted',
+          theme: 'bootstrap',
+          showClose: true,
+          timeout: 5000
+      });
+    });
+    }
+  }
 }
