@@ -1,3 +1,4 @@
+import { VehicleListComponent } from './components/vehicle-list/vehicle-list.component';
 import * as Raven from 'raven-js';
 import { AppErrorHandler } from './app.error-handler';
 import { VehicleService } from './Services/vehicle.service';
@@ -23,6 +24,7 @@ Raven
     declarations: [
         AppComponent,
         VehicleFormComponent,
+        VehicleListComponent,
         NavMenuComponent,
         CounterComponent,
         FetchDataComponent,
@@ -34,9 +36,10 @@ Raven
         FormsModule,
         ToastyModule.forRoot(),
         RouterModule.forRoot([
-            { path: '', redirectTo: 'home', pathMatch: 'full' },
+            { path: '', redirectTo: 'vehicles', pathMatch: 'full' },
             { path: 'vehicles/new', component: VehicleFormComponent },
             { path: 'vehicles/:id', component: VehicleFormComponent },
+            { path: 'vehicles', component: VehicleListComponent },
             { path: 'home', component: HomeComponent },
             { path: 'counter', component: CounterComponent },
             { path: 'fetch-data', component: FetchDataComponent },

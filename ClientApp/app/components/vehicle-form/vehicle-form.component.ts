@@ -111,10 +111,20 @@ export class VehicleFormComponent implements OnInit {
           timeout: 5000
         });
       });
+      this.router.navigate(['/vehicles']);
     }
     else {
       this.vehicleService.create(this.vehicle)
-          .subscribe(x => console.log(x));
+          .subscribe(x => {
+            this.toastyService.success({
+              title: 'Seccess',
+              msg: 'The vehicle was successfully created',
+              theme: 'bootstrap',
+              showClose: true,
+              timeout: 5000
+            });
+          });
+          this.router.navigate(['/vehicles']); 
     }
     
     
@@ -124,7 +134,7 @@ export class VehicleFormComponent implements OnInit {
     if (confirm('Are you sure?')){
       this.vehicleService.delete(this.vehicle.id)
       .subscribe(x =>{
-        this.router.navigate(['/home']);
+        this.router.navigate(['/vehicles']);
         this.toastyService.success({
           title: 'Seccess',
           msg: 'The vehicle was successfully deleted',
