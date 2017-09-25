@@ -9,7 +9,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./vehicle-list.component.css']
 })
 export class VehicleListComponent implements OnInit {
-  allVehicles: Vehicle[];
   vehicles: Vehicle[];
   makes: KeyValuePair[];
   filter: any = {};
@@ -21,17 +20,16 @@ export class VehicleListComponent implements OnInit {
     this.vehicleService.getMakes()
     .subscribe(makes => this.makes=makes);
 
-    this.vehicleService.getVehicles()
-      .subscribe(vehicles => this.vehicles=this.allVehicles=vehicles);
+    this.populateVehicles();
   }
 
-  onFilterChange(){
-    var filteredVehicles = this.allVehicles
+  private populateVehicles(){
+    this.vehicleService.getVehicles(this.filter)
+    .subscribe(vehicles => this.vehicles=vehicles);
     
-    if (this.filter.makeId)
-      filteredVehicles=filteredVehicles.filter(v => v.make.id==this.filter.makeId);
-
-    this.vehicles=filteredVehicles;
+  }
+  onFilterChange(){
+  this.populateVehicles();
   }
 
   resetFilter(){
