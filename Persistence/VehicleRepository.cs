@@ -34,7 +34,7 @@ namespace Vega.Persistence
             .SingleOrDefaultAsync (v =>v.Id==id);
         }
         
-        public async Task<IEnumerable<Vehicle>> GetVehicles(Filter filter)
+        public async Task<IEnumerable<Vehicle>> GetVehicles(VehicleQuery filter)
         {
            var query = context.Vehicles
             .Include (v => v.Model)
