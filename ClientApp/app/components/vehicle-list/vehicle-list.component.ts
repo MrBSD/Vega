@@ -9,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./vehicle-list.component.css']
 })
 export class VehicleListComponent implements OnInit {
-  vehicles: Vehicle[];
+  columns = [
+    { title: 'Id' },
+    { title: 'Make', key: 'make', isSortable: true },
+    { title: 'Model', key: 'model', isSortable: true },
+    { title: 'Contact Name', key: 'contactName', isSortable: true },
+    { }
+  ];
   makes: KeyValuePair[];
+  vehicles: Vehicle[];
   query: any = {};
+
 
   constructor(private vehicleService: VehicleService) { }
 
@@ -39,7 +47,7 @@ export class VehicleListComponent implements OnInit {
 
   sortBy(columnName){
     if (this.query.sortBy===columnName){
-      this.query.isSortAscending = false;
+      this.query.isSortAscending = !this.query.isSortAscending;
     }
     else {
       this.query.sortBy=columnName;
