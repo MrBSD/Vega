@@ -58,12 +58,19 @@ namespace Vega.Persistence
                 ["contactName"] = v => v.ContactName
             };
 
-            if (queryObj.IsSortAscending)
-                query = query.OrderBy(columnsMap[queryObj.SortBy]);
-            else
-                query = query.OrderByDescending(columnsMap[queryObj.SortBy]);
-
+            query = ApplyOrdering(queryObj, query, columnsMap);
+            
             return await query.ToListAsync();
+        }
+
+        private IQueryable<Vehicle> ApplyOrdering(VehicleQuery queryObj, IQueryable<Vehicle> query, Dictionary<string, Expression<Func<Vehicle, object>>> columnsMap)
+        {
+            if (queryObj.IsSortAscending)
+               return query = query.OrderBy(columnsMap[queryObj.SortBy]);
+            else
+               return query = query.OrderByDescending(columnsMap[queryObj.SortBy]);
+
+
         }
 
         public void Remove(Vehicle vehicle)
