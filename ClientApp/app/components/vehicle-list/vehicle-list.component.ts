@@ -9,6 +9,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./vehicle-list.component.css']
 })
 export class VehicleListComponent implements OnInit {
+  private readonly PAGE_SIZE = 3;
+  
   columns = [
     { title: 'Id' },
     { title: 'Make', key: 'make', isSortable: true },
@@ -17,9 +19,9 @@ export class VehicleListComponent implements OnInit {
     { }
   ];
   makes: KeyValuePair[];
-  vehicles: Vehicle[];
+  queryResult: any = {};
   query: any = {
-    pageSize: 3
+    pageSize: this.PAGE_SIZE
   };
 
 
@@ -35,15 +37,19 @@ export class VehicleListComponent implements OnInit {
 
   private populateVehicles(){
     this.vehicleService.getVehicles(this.query)
-    .subscribe(vehicles => this.vehicles=vehicles);
+    .subscribe(result => this.queryResult=result);
     
   }
   onFilterChange(){
+    this.query.page=1;
   this.populateVehicles();
   }
 
   resetFilter(){
-    this.query={};
+    this.query={
+      page: 1,
+      pageSize: this.PAGE_SIZE
+    };
     this.onFilterChange();
   }
 
