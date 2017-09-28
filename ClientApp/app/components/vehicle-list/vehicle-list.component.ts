@@ -18,7 +18,9 @@ export class VehicleListComponent implements OnInit {
   ];
   makes: KeyValuePair[];
   vehicles: Vehicle[];
-  query: any = {};
+  query: any = {
+    pageSize: 3
+  };
 
 
   constructor(private vehicleService: VehicleService) { }
@@ -56,6 +58,11 @@ export class VehicleListComponent implements OnInit {
 
     this.populateVehicles();
 
+  }
+
+  onPageChange(page){
+    this.query.page=page;
+    this.populateVehicles();
   }
 
 }

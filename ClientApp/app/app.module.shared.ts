@@ -1,3 +1,4 @@
+import { PaginationComponent } from './components/shared/pagination/pagination.component';
 import { VehicleListComponent } from './components/vehicle-list/vehicle-list.component';
 import * as Raven from 'raven-js';
 import { AppErrorHandler } from './app.error-handler';
@@ -25,6 +26,8 @@ Raven
         AppComponent,
         VehicleFormComponent,
         VehicleListComponent,
+        PaginationComponent,
+        // AppErrorHandler,
         NavMenuComponent,
         CounterComponent,
         FetchDataComponent,
